@@ -52,3 +52,9 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+/.idea/.idea.FarmaciaDeTurnoCerca/.idea/.gitignore
+/.idea/.idea.FarmaciaDeTurnoCerca/.idea/encodings.xml
+/.idea/.idea.FarmaciaDeTurnoCerca/.idea/indexLayout.xml
+/.idea/.idea.FarmaciaDeTurnoCerca/.idea/vcs.xml
+/.idea/config/applicationhost.config
+/FarmaciaDeTurnoCerca.sln.DotSettings.user
