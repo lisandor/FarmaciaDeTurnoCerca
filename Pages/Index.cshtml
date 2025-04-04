@@ -1,0 +1,57 @@
+﻿@page
+@using GeoCoordinatePortable
+@model IndexModel
+@{
+    
+}
+<script>
+    navigator.geolocation.getCurrentPosition(success, error);
+    function success(position) {
+       document.getElementsByName("latitud")[0].value = position.coords.latitude;
+       document.getElementsByName("longitud")[0].value = position.coords.longitude;
+    }
+    function error(error) {
+        alert(error.message);
+    }
+</script>
+<form method="post">
+    <h1>Farmacias de turno cerca tuyo</h1>
+    <select name="Ciudad">
+        @foreach (var item in Model.Ciudades)
+        {
+            <option value="@item.Url">@item.Nombre</option>
+        }
+    </select>
+    <input type="hidden" name="latitud"/>
+    <input type="hidden" name="longitud"/>
+    <button type="submit">buscar</button>
+</form>
+@if (Model.Farmacias.Count > 0)
+{
+    
+    <h2>Farmacias</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Direccion</th>
+            <th>Distancia</th>
+            <th>Ubicacion</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Farmacias)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Direccion</td>
+                <td>@((item.Geo.GetDistanceTo(new GeoCoordinate(latitude:-34.919480, longitude:-57.957460))/1000).ToString("N"))</td>
+                <td><a href="@item.Ubicacion" target="_blank">Como llegar</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+    
+
+
