@@ -26,9 +26,14 @@ public class IndexModel : PageModel
         
     }
 
-    public void OnPost(string ciudad, string latitud, string longitud)
+    public void OnPost(string ciudad, string? latitud, string? longitud)
     {
-        var miposicion = new GeoCoordinate(double.Parse(latitud.Replace(".",",")), double.Parse(longitud.Replace(".",",")));
+        if (string.IsNullOrEmpty(latitud) || string.IsNullOrEmpty(longitud))
+        {
+            latitud = "-34.9214291";
+            longitud = "-57.96489";
+        }
+        var miposicion = ParseCoordinates(latitud, longitud);
         const string url = "https://www.colfarmalp.org.ar/turnos-la-plata/";
         var response = CallUrl(ciudad).Result;
         var htmlDoc = new HtmlDocument();
@@ -52,15 +57,41 @@ public class IndexModel : PageModel
             };
             Farmacias.Add(f);
         }
+            
 
-        Farmacias = Farmacias.OrderBy(f => f.Distancia).ToList().Slice(0,5);
+        Farmacias = Farmacias.OrderBy(f => f.Distancia).ToList()[..10];
+    }
+
+    private GeoCoordinate ParseCoordinates(string latitud, string longitud)
+    {
+        
+        try
+        {
+            return new GeoCoordinate(double.Parse(latitud), double.Parse(longitud));
+        }
+        catch (Exception e)
+        {
+            throw new Exception($"Error parseando las coordenadas: {double.Parse(latitud)} - {double.Parse(longitud)}");
+            return new GeoCoordinate(double.Parse(latitud.Replace(".",",")),
+                double.Parse(longitud.Replace(".",",")));
+        }
     }
 
     private static GeoCoordinate GetCoordenadas(string ubicacion)
     {
         var coord = ubicacion.Split("=").Last();
-        return new GeoCoordinate(double.Parse(coord.Split(",")[0].Replace(".", ",")),
-            double.Parse(coord.Split(",")[1].Replace(".", ",")));
+        var lat = coord.Split(",")[0];
+        var lon = coord.Split(",")[1];
+        try
+        {
+            return new GeoCoordinate(double.Parse(lat),
+                double.Parse(lon));
+
+        }
+        catch (Exception e)
+        {
+            throw new Exception($"Error obteniendo las coordenadas desde {ubicacion} - {lat} - {lon}"); 
+        }
     }
 
     private static async Task<string> CallUrl(string fullUrl)

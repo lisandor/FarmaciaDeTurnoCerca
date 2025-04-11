@@ -9,34 +9,46 @@
     function success(position) {
        document.getElementsByName("latitud")[0].value = position.coords.latitude;
        document.getElementsByName("longitud")[0].value = position.coords.longitude;
+       document.getElementById("miUbicacion").innerHTML = position.coords.latitude + "," +position.coords.longitude;
+       document.getElementById("miUbicacionLink").href = "https://www.google.com/maps/place/"+position.coords.latitude+","+position.coords.longitude;
     }
     function error(error) {
         alert(error.message);
     }
 </script>
-<form method="post">
-    <h1>Farmacias de turno cerca tuyo</h1>
-    <select name="Ciudad">
-        @foreach (var item in Model.Ciudades)
-        {
-            <option value="@item.Url">@item.Nombre</option>
-        }
-    </select>
+<h1>Encontr&aacute; la farmacia de turno m&aacute;s cercana!</h1>
+<form  method="post">
+    <div style="display: flex;">
+        <select class="form-select" style="width: 200px" name="Ciudad">
+            @foreach (var item in Model.Ciudades)
+            {
+                <option value="@item.Url">@item.Nombre</option>
+            }
+        </select>
+        <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Buscar</button>
+        
+    </div>
     <input type="hidden" name="latitud"/>
     <input type="hidden" name="longitud"/>
-    <button type="submit">buscar</button>
 </form>
+<div class="pt-3">
+<p> Tu ubicaci&oacute;n: 
+    <a id="miUbicacionLink" target="_blank"><img alt="ubicacion" src="~/images/ubicacion.png" height="20px"/></a>
+    <span id="miUbicacion"></span>
+</p>
+</div>
+
 @if (Model.Farmacias.Count > 0)
 {
     
     <h2>Farmacias</h2>
-    <table>
+    <table class="table">
         <thead>
         <tr>
-            <th>Nombre</th>
-            <th>Direccion</th>
-            <th>Distancia</th>
-            <th>Ubicacion</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Distancia *</th>
+            <th scope="col">Ubicacion</th>
         </tr>
         </thead>
         <tbody>
@@ -45,12 +57,14 @@
             <tr>
                 <td>@item.Nombre</td>
                 <td>@item.Direccion</td>
-                <td>@((item.Geo.GetDistanceTo(new GeoCoordinate(latitude:-34.919480, longitude:-57.957460))/1000).ToString("N"))</td>
+                <td>@((item.Distancia/1000).ToString("N")) km</td>
+                
                 <td><a href="@item.Ubicacion" target="_blank">Como llegar</a></td>
             </tr>
         }
         </tbody>
     </table>
+    <i>* La distancia calculada es la distancia lineal. Puede ser diferente la distancia calculada en el camino a tomar</i>
 }
     
 

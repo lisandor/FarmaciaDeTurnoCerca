@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - FarmaciaDeTurnoCerca</title>
+    <title>Farmacia De Turno - Encontr&aacute; la farmacia de turno m&aacute;s cercana</title>
+    <meta name="description" content="Con Farmacia-de-turno podés encontrar la farmacia de turno más cercana. 100% gratis y actualizado.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://www.farmacia-de-turno.com.ar/" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/FarmaciaDeTurnoCerca.styles.css" asp-append-version="true"/>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background: #EFEDEA">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">FarmaciaDeTurnoCerca</a>
+            <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="~/images/logo.png" height="50px"/></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,10 +43,18 @@
 
 <footer class="border-top footer text-muted">
     <div class="container">
-        &copy; 2025 - FarmaciaDeTurnoCerca - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        &copy; 2025 - Farmacia De Turno - <a asp-area="" asp-page="/Privacy">Contacto</a>
     </div>
 </footer>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J934F1YHW2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
+    gtag('config', 'G-J934F1YHW2');
+</script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
